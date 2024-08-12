@@ -28,7 +28,7 @@ class CarouselImage extends StatelessWidget {
         autoPlayAnimationDuration: const Duration(milliseconds: 2500),
         autoPlayCurve: Curves.easeInOutCubic,
         scrollPhysics: const ClampingScrollPhysics(),
-        autoPlay: true,
+        autoPlay: false,
         autoPlayInterval: const Duration(seconds: 3),
         viewportFraction: 1,
         height: MediaQuery.of(context).size.width * .4,

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ecommerce/components/bottom_bar.dart';
+import 'package:ecommerce/screens/auth/login_screen.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -20,6 +22,8 @@ class AuthService {
       User user =
           User(id: '', name: name, email: email, token: '', password: password);
 
+      final navigator = Navigator.of(context);
+
       http.Response res = await http.post(
         Uri.parse('${Constants.uri}/api/signup'),
         body: user.toJson(),
@@ -32,14 +36,16 @@ class AuthService {
         response: res,
         context: context,
         onSuccess: () {
-          showSnackBar(
-            context,
-            'Đăng kí thành công!',
+          navigator.pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const LoginScreen(),
+            ),
+            (route) => false,
           );
         },
       );
     } catch (e) {
-      showSnackBar(context, 'An error occurred: ${e.toString()}');
+      print("Error occurred: $e");
     }
   }
 
@@ -85,7 +91,7 @@ class AuthService {
 
           navigator.pushAndRemoveUntil(
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const BottomBar(),
             ),
             (route) => false,
           );
@@ -96,7 +102,7 @@ class AuthService {
     }
   }
 
-  void getUserData(BuildContext context) async {
+  Future<void> getUserData(BuildContext context) async {
     try {
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -115,18 +121,16 @@ class AuthService {
         },
       );
 
-      if (userRes.statusCode == 200) {
-        final Map<String, dynamic> resData = jsonDecode(userRes.body);
-        if (resData['success'] == true) {
-          userProvider.setUser(jsonEncode(resData['data']));
-        } else {
-          showSnackBar(context, resData['message']);
-        }
-      } else {
-        showSnackBar(context, 'Failed to fetch user data.');
-      }
+      final Map<String, dynamic> resData = jsonDecode(userRes.body);
+      userProvider.setUser(jsonEncode(resData['data']));
+      print('Data from response: ${resData['data']}');
+      print('Stored user in UserProvider: ${userProvider.user}');
     } catch (e) {
-      showSnackBar(context, 'An error occurred: ${e.toString()}');
+      if (ScaffoldMessenger.maybeOf(context) != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occurred: ${e.toString()}')),
+        );
+      }
     }
   }
 }

@@ -26,57 +26,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-        const Text(
-          "Đăng kí",
-          style: TextStyle(fontSize: 25),
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: CustomTextField(
-              controller: nameController, hintText: 'Họ và tên'),
-        ),
-        const SizedBox(height: 20),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child:
-              CustomTextField(controller: emailController, hintText: 'Email'),
-        ),
-        const SizedBox(height: 20),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: CustomTextField(
-              controller: passwordController, hintText: 'Mật khẩu'),
-        ),
-        const SizedBox(height: 40),
-        ElevatedButton(
-          onPressed: signupUser,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.blue),
-            textStyle: MaterialStateProperty.all(
-              const TextStyle(color: Colors.white),
-            ),
-          ),
-          child: const Text(
-            "Đăng kí",
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-        TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+              const Text(
+                "Đăng kí",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red, // Adjust the color as per your need
                 ),
-              );
-            },
-            child: const Text('Bạn đã có tài khoản? Đăng nhập'))
-      ]),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: CustomTextField(
+                    controller: nameController, hintText: 'Họ và tên'),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: CustomTextField(
+                    controller: emailController, hintText: 'Email'),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: CustomTextField(
+                    controller: passwordController, hintText: 'Mật khẩu'),
+              ),
+              const SizedBox(height: 40),
+              ElevatedButton(
+                onPressed: signupUser,
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.blue),
+                  textStyle: WidgetStateProperty.all(
+                    const TextStyle(color: Colors.white),
+                  ),
+                  padding: WidgetStateProperty.all(
+                    const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                  ),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+                child: const Text(
+                  "Đăng kí",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'Bạn đã có tài khoản? Đăng nhập',
+                    style: TextStyle(color: Colors.purple),
+                  )),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

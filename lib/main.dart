@@ -42,10 +42,10 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: Provider.of<UserProvider>(context).user.token.isEmpty
-      //     ? const LoginScreen()
-      //     : const HomeScreen(),
-      home: const BottomBar(),
+      home: Provider.of<UserProvider>(context).user.token.isEmpty
+          ? const LoginScreen()
+          : const BottomBar(),
+      // home: const BottomBar(),
     );
   }
 }

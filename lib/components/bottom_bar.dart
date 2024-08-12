@@ -42,7 +42,7 @@ class _BottomBarState extends State<BottomBar> {
           /// Home
           SalomonBottomBarItem(
             icon: const Icon(Icons.home),
-            title: const Text("Trang chủ"),
+            title: const Text("Trang Chủ"),
             selectedColor: const Color.fromARGB(255, 7, 7, 7),
           ),
 
