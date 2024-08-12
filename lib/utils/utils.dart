@@ -15,17 +15,23 @@ void httpErrorHandle({
   required BuildContext context,
   required VoidCallback onSuccess,
 }) {
-  switch (response.statusCode) {
-    case 200:
-      onSuccess();
-      break;
-    case 400:
-      showSnackBar(context, jsonDecode(response.body)['msg']);
-      break;
-    case 500:
-      showSnackBar(context, jsonDecode(response.body)['error']);
-      break;
-    default:
-      showSnackBar(context, response.body);
+  try {
+    switch (response.statusCode) {
+      case 200:
+        onSuccess();
+        break;
+      case 400:
+        final body = jsonDecode(response.body);
+        showSnackBar(context, body['msg'] ?? 'Bad Request');
+        break;
+      case 500:
+        final body = jsonDecode(response.body);
+        showSnackBar(context, body['error'] ?? 'Server Error');
+        break;
+      default:
+        showSnackBar(context, 'Unexpected Error: ${response.statusCode}');
+    }
+  } catch (e) {
+    showSnackBar(context, 'Error parsing response: ${e.toString()}');
   }
 }

@@ -12,7 +12,8 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return Material(
+        child: TextField(
       controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -33,6 +34,6 @@ class CustomTextField extends StatelessWidget {
           fontWeight: FontWeight.w400,
         ),
       ),
-    );
+    ));
   }
 }
