@@ -49,7 +49,7 @@ class _BottomBarState extends State<BottomBar> {
           /// Likes
           SalomonBottomBarItem(
             icon: const Icon(Icons.favorite_border),
-            title: const Text("Danh mục"),
+            title: const Text("Sản phẩm"),
             selectedColor: const Color.fromARGB(255, 8, 8, 8),
           ),
 

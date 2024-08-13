@@ -1,8 +1,10 @@
 import 'package:ecommerce/providers/product_provider.dart';
 import 'package:ecommerce/services/product_services.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce/utils/constants.dart';
+import 'package:intl/intl.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({super.key});
@@ -22,6 +24,8 @@ class _ProductListState extends State<ProductList> {
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
     final products = productProvider.products;
+    final formatCurrency =
+        NumberFormat.currency(locale: 'vi_VN', symbol: 'VND');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -93,7 +97,7 @@ class _ProductListState extends State<ProductList> {
                                     child: SizedBox(
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              .15,
+                                              .11,
                                       width: MediaQuery.of(context).size.width *
                                           .4,
                                       child: Image.network(
@@ -117,8 +121,53 @@ class _ProductListState extends State<ProductList> {
                                     style: TextStyle(
                                         color: Colors.blue.shade500,
                                         fontSize: 10),
-                                    textAlign: TextAlign.end,
+                                    textAlign: TextAlign.center,
                                   ),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Text(
+                                      formatCurrency
+                                          .format(int.parse(product.price)),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextButton.icon(
+                                        style: TextButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                        ),
+                                        onPressed: () => {},
+                                        icon: const Icon(
+                                          CupertinoIcons.heart_solid,
+                                          size: 30,
+                                          color: Colors.black87,
+                                        ),
+                                        label: const Text(
+                                          '',
+                                          style: TextStyle(
+                                              color: Colors.black87,
+                                              fontSize: 10),
+                                        ),
+                                      ),
+                                      Container(
+                                        child: InkWell(
+                                          onTap: () => {},
+                                          child: const Icon(
+                                            CupertinoIcons.cart_badge_plus,
+                                            size: 30,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )
                                 ],
                               ),
                             ),

@@ -83,7 +83,6 @@ class AuthService {
 
           // Gán giá trị token vào userProvider
           userProvider.setUser(jsonEncode({
-            'email': email,
             'token': token,
           }));
 
