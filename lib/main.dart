@@ -40,16 +40,25 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final userToken = userProvider.user.token;
+
+    print(userToken);
+
     return MaterialApp(
       title: 'Ecommerce',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: Provider.of<UserProvider>(context).user.token.isEmpty
-      //     ? const LoginScreen()
-      //     : const BottomBar(),
-      home: const BottomBar(),
+      // home: Scaffold(
+      //   body: Text(
+      //     userToken,
+      //     style: const TextStyle(color: Colors.black),
+      //   ),
+      // ),
+      home: userToken.isNotEmpty ? const LoginScreen() : const BottomBar(),
+      // home: const BottomBar(),
     );
   }
 }
