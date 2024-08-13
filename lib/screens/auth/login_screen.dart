@@ -50,11 +50,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 onPressed: loginUser,
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.blue),
-                  textStyle: WidgetStateProperty.all(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  textStyle: MaterialStateProperty.all(
                     const TextStyle(color: Colors.white),
                   ),
-                  minimumSize: WidgetStateProperty.all(
+                  minimumSize: MaterialStateProperty.all(
                     Size(MediaQuery.of(context).size.width / 2.5, 50),
                   ),
                 ),

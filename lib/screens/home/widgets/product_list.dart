@@ -1,0 +1,135 @@
+import 'package:ecommerce/providers/product_provider.dart';
+import 'package:ecommerce/services/product_services.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ecommerce/utils/constants.dart';
+
+class ProductList extends StatefulWidget {
+  const ProductList({super.key});
+
+  @override
+  State<ProductList> createState() => _ProductListState();
+}
+
+class _ProductListState extends State<ProductList> {
+  @override
+  void initState() {
+    super.initState();
+    ProductService().fetchProducts(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
+    final products = productProvider.products;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+                  vertical: MediaQuery.of(context).size.height * .008)
+              .copyWith(right: MediaQuery.of(context).size.height * .015),
+          child: InkWell(
+            onTap: () {
+              // Điều hướng đến trang danh mục nếu cần
+            },
+            child: Text("Xem tất cả",
+                style: TextStyle(
+                    color: Colors.grey.shade800, fontWeight: FontWeight.w600)),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(color: Colors.grey.shade200, width: 0.5),
+              bottom: BorderSide(color: Colors.grey.shade700, width: 0.4),
+            ),
+          ),
+          child: products.isEmpty
+              ? const Center(child: CircularProgressIndicator())
+              : Padding(
+                  // Thay thế Expanded bằng Padding hoặc SizedBox
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * .04,
+                  ),
+                  child: GridView.builder(
+                    shrinkWrap:
+                        true, // Thêm shrinkWrap để GridView không chiếm hết chiều cao
+                    physics:
+                        const NeverScrollableScrollPhysics(), // Loại bỏ scroll của GridView
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.72,
+                      mainAxisSpacing: 15,
+                      crossAxisSpacing: 15,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      return Stack(
+                        alignment: AlignmentDirectional.topEnd,
+                        children: [
+                          Card(
+                            color: const Color.fromARGB(255, 254, 252, 255),
+                            elevation: 2.5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * .025,
+                                  vertical:
+                                      MediaQuery.of(context).size.width * .02),
+                              child: Column(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      // Hành động khi nhấn vào sản phẩm
+                                    },
+                                    child: SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              .15,
+                                      width: MediaQuery.of(context).size.width *
+                                          .4,
+                                      child: Image.network(
+                                        '${Constants.uri}/${product.imageUrl}',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    product.name,
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    'Số lượng đã bán: ${product.sellNumber}',
+                                    style: TextStyle(
+                                        color: Colors.blue.shade500,
+                                        fontSize: 10),
+                                    textAlign: TextAlign.end,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+        ),
+      ],
+    );
+  }
+}

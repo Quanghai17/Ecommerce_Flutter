@@ -1,5 +1,7 @@
 import 'package:ecommerce/providers/user_provider.dart';
 import 'package:ecommerce/screens/home/widgets/carousel_image.dart';
+import 'package:ecommerce/screens/home/widgets/categories.dart';
+import 'package:ecommerce/screens/home/widgets/product_list.dart';
 import 'package:ecommerce/utils/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: MediaQuery.of(context).size.width * 0.02),
               const CarouselImage(),
               SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+              const Categories(),
+              SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+              const ProductList()
             ]),
           )
         ],

@@ -1,5 +1,7 @@
 import 'package:ecommerce/components/bottom_bar.dart';
 import 'package:ecommerce/providers/user_provider.dart';
+import 'package:ecommerce/providers/category_provider.dart';
+import 'package:ecommerce/providers/product_provider.dart';
 import 'package:ecommerce/screens/auth/login_screen.dart';
 import 'package:ecommerce/screens/auth/signup_screen.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
@@ -12,6 +14,8 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
       ],
       child: const MyApp(),
     ),
@@ -42,10 +46,10 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Provider.of<UserProvider>(context).user.token.isEmpty
-          ? const LoginScreen()
-          : const BottomBar(),
-      // home: const BottomBar(),
+      // home: Provider.of<UserProvider>(context).user.token.isEmpty
+      //     ? const LoginScreen()
+      //     : const BottomBar(),
+      home: const BottomBar(),
     );
   }
 }

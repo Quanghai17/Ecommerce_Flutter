@@ -38,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
-                  color: Colors.red, // Adjust the color as per your need
+                  color: Colors.black, // Adjust the color as per your need
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.08),
@@ -63,14 +63,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ElevatedButton(
                 onPressed: signupUser,
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.blue),
-                  textStyle: WidgetStateProperty.all(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  textStyle: MaterialStateProperty.all(
                     const TextStyle(color: Colors.white),
                   ),
-                  padding: WidgetStateProperty.all(
+                  padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
                   ),
-                  shape: WidgetStateProperty.all(
+                  shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
