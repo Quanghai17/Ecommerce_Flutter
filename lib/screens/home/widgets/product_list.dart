@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:ecommerce/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:ecommerce/screens/category/product_detail.dart';
+import 'package:ecommerce/models/product.dart';
+import 'package:ecommerce/services/cart_services.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({super.key});
@@ -15,10 +17,15 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
+  final CartService _cartService = CartService();
   @override
   void initState() {
     super.initState();
     ProductService().fetchProducts(context);
+  }
+
+  void addToCart(Product product) async {
+    await _cartService.addToCart(context, product.id);
   }
 
   @override
@@ -168,7 +175,7 @@ class _ProductListState extends State<ProductList> {
                                       ),
                                       Container(
                                         child: InkWell(
-                                          onTap: () => {},
+                                          onTap: () => addToCart(product),
                                           child: const Icon(
                                             CupertinoIcons.cart_badge_plus,
                                             size: 30,

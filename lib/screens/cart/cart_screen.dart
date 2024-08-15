@@ -1,5 +1,6 @@
 import 'package:ecommerce/components/custom_button.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
+import 'package:ecommerce/screens/cart/cart_product.dart';
 import 'package:ecommerce/screens/cart/cart_subtotal.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/utils/constants.dart';
@@ -76,20 +77,10 @@ class _CartScreenState extends State<CartScreen> {
                       itemBuilder: (context, index) {
                         // Hiển thị từng sản phẩm trong giỏ hàng
                         final cartItem = cartProvider[index];
-                        return ListTile(
-                          leading: cartItem.product?.imageUrl != null
-                              ? Image.network(
-                                  '${Constants.uri}/${cartItem.product!.imageUrl}',
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
-                                )
-                              : const SizedBox.shrink(),
-                          title:
-                              Text(cartItem.product?.name ?? 'Unknown Product'),
-                          subtitle: Text('Số lượng: ${cartItem.quantity}'),
-                          trailing:
-                              Text('${cartItem.product?.price ?? ''} VND'),
+                        return CartProduct(
+                          cartItem: cartItem,
+                          onIncreaseQuantity: () {},
+                          onDecreaseQuantity: () {},
                         );
                       },
                     ),

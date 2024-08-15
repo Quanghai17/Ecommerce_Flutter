@@ -16,6 +16,16 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  double get totalAmount {
+    double total = 0.0;
+    for (var item in _cartItems) {
+      if (item.product != null) {
+        total += double.parse(item.product!.price) * item.quantity;
+      }
+    }
+    return total;
+  }
+
   void removeCartItem(int id) {
     _cartItems.removeWhere((item) => item.id == id);
     notifyListeners();
@@ -32,5 +42,17 @@ class CartProvider extends ChangeNotifier {
   void clearCart() {
     _cartItems.clear();
     notifyListeners();
+  }
+
+  void increaseQuantity(CartItem cartItem) {
+    cartItem.quantity;
+    notifyListeners();
+  }
+
+  void decreaseQuantity(CartItem cartItem) {
+    if (cartItem.quantity > 1) {
+      cartItem.quantity;
+      notifyListeners();
+    }
   }
 }

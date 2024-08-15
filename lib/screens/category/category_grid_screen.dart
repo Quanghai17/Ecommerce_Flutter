@@ -9,6 +9,7 @@ import 'package:ecommerce/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:ecommerce/providers/product_provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ecommerce/services/cart_services.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -18,10 +19,16 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+  final CartService _cartService = CartService();
+
   @override
   void initState() {
     super.initState();
     ProductService().fetchProducts(context);
+  }
+
+  void addToCart(Product product) async {
+    await _cartService.addToCart(context, product.id);
   }
 
   @override
@@ -179,7 +186,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             ),
                                             Container(
                                               child: InkWell(
-                                                onTap: () => {},
+                                                onTap: () => addToCart(product),
                                                 child: const Icon(
                                                   CupertinoIcons
                                                       .cart_badge_plus,

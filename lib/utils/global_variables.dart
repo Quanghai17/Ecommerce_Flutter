@@ -29,7 +29,7 @@ class GlobalVariables {
       ),
       iconTheme: const IconThemeData(color: Colors.black),
       leading: Padding(
-        padding: EdgeInsets.all(MediaQuery.of(context).size.height * .025)
+        padding: EdgeInsets.all(MediaQuery.of(context).size.height * .005)
             .copyWith(right: 0),
         child: wantBackNavigation!
             ? IconButton(
