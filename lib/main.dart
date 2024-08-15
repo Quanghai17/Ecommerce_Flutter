@@ -8,6 +8,7 @@ import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce/services/auth_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(
@@ -40,18 +41,34 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final userToken = userProvider.user.token;
+    return FutureBuilder<String?>(
+      future: _getToken(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const MaterialApp(
+            home: Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            ),
+          );
+        }
 
-    return MaterialApp(
-      title: 'Ecommerce',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: (userToken == null || userToken.isEmpty)
-          ? const LoginScreen()
-          : const BottomBar(),
+        final token = snapshot.data;
+        return MaterialApp(
+          title: 'Ecommerce',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: token != null && token.isNotEmpty
+              ? const BottomBar()
+              : const LoginScreen(),
+        );
+      },
     );
+  }
+
+  Future<String?> _getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('x-auth-token');
   }
 }
