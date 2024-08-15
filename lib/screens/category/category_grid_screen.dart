@@ -1,3 +1,5 @@
+import 'package:ecommerce/models/product.dart';
+import 'package:ecommerce/screens/category/product_detail.dart';
 import 'package:ecommerce/screens/search/SearchScreen.dart';
 import 'package:ecommerce/services/product_services.dart';
 import 'package:ecommerce/utils/global_variables.dart';
@@ -28,11 +30,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
     final products = productProvider.products;
     final formatCurrency =
         NumberFormat.currency(locale: 'vi_VN', symbol: 'VND');
+
+    final Product product;
+
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 202, 201, 201),
         appBar: GlobalVariables.getAppBar(
             context: context,
-            title: 'Danh sách',
+            title: 'Danh sách sản phẩm',
             wantBackNavigation: false,
             onClickSearchNavigateTo: const MySearchScreen()),
         body: SingleChildScrollView(
@@ -96,7 +101,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            // Hành động khi nhấn vào sản phẩm
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProductDetailScreen(
+                                                        product: product),
+                                              ),
+                                            );
                                           },
                                           child: SizedBox(
                                             height: MediaQuery.of(context)

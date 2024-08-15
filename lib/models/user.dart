@@ -1,40 +1,53 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class User {
-  final String id;
+  final int id;
   final String name;
   final String email;
-  final String token;
+  final String role;
   final String password;
-  User(
-      {required this.id,
-      required this.name,
-      required this.email,
-      required this.token,
-      required this.password});
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final String? token; // Optional, chỉ cần khi lưu token sau khi đăng nhập
+
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.role,
+    required this.password,
+    required this.createdAt,
+    required this.updatedAt,
+    this.token, // Optional, chỉ cần khi lưu token sau khi đăng nhập
+  });
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
+      'id': id,
       'name': name,
       'email': email,
-      'token': token,
+      'role': role,
       'password': password,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
+      'token': token,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'] ?? '',
+      id: map['id'] ?? 0,
       name: map['name'] ?? '',
       email: map['email'] ?? '',
-      token: map['token'] ?? '',
+      role: map['role'] ?? '',
       password: map['password'] ?? '',
+      createdAt: DateTime.parse(map['createdAt']),
+      updatedAt: DateTime.parse(map['updatedAt']),
+      token: map['token'], // Optional, chỉ cần khi lưu token sau khi đăng nhập
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) =>
-      User.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory User.fromJson(String source) => User.fromMap(json.decode(source));
 }

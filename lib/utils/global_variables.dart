@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class GlobalVariables {
   static const TextStyle appBarTextStyle =
-      TextStyle(fontStyle: FontStyle.normal, fontSize: 20, color: Colors.black);
+      TextStyle(fontStyle: FontStyle.normal, fontSize: 15, color: Colors.black);
 
   static const List<String> carouselImages = [
     'https://images-eu.ssl-images-amazon.com/images/G/31/img21/Wireless/WLA/TS/D37847648_Accessories_savingdays_Jan22_Cat_PC_1500.jpg',
@@ -21,8 +21,12 @@ class GlobalVariables {
     String? title = "",
   }) {
     return AppBar(
-      title: Text("$title",
-          style: appBarTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
+      title: Text(
+        "$title",
+        style: appBarTextStyle,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
       iconTheme: const IconThemeData(color: Colors.black),
       leading: Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.height * .025)

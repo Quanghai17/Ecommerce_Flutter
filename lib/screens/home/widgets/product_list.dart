@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce/utils/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:ecommerce/screens/category/product_detail.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({super.key});
@@ -92,6 +93,14 @@ class _ProductListState extends State<ProductList> {
                                 children: [
                                   InkWell(
                                     onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProductDetailScreen(
+                                                  product: product),
+                                        ),
+                                      );
                                       // Hành động khi nhấn vào sản phẩm
                                     },
                                     child: SizedBox(

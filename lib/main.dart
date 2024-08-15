@@ -43,22 +43,15 @@ class _MyAppState extends State<MyApp> {
     final userProvider = Provider.of<UserProvider>(context);
     final userToken = userProvider.user.token;
 
-    print(userToken);
-
     return MaterialApp(
       title: 'Ecommerce',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: Scaffold(
-      //   body: Text(
-      //     userToken,
-      //     style: const TextStyle(color: Colors.black),
-      //   ),
-      // ),
-      home: userToken.isNotEmpty ? const LoginScreen() : const BottomBar(),
-      // home: const BottomBar(),
+      home: (userToken == null || userToken.isEmpty)
+          ? const LoginScreen()
+          : const BottomBar(),
     );
   }
 }
