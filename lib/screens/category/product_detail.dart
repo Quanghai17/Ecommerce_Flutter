@@ -20,7 +20,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final CartService _cartService = CartService();
 
   void addToCart() async {
-    await _cartService.addToCart(context, widget.product.id.toString());
+    await _cartService.addToCart(context, widget.product.id);
   }
 
   @override

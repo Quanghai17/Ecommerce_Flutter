@@ -9,7 +9,7 @@ import 'package:ecommerce/utils/constants.dart';
 import 'package:ecommerce/utils/utils.dart';
 
 class CartService {
-  Future<void> addToCart(BuildContext context, String productId) async {
+  Future<void> addToCart(BuildContext context, int productId) async {
     try {
       final cartProvider = Provider.of<CartProvider>(context, listen: false);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -39,6 +39,45 @@ class CartService {
       } else {
         showSnackBar(
             context, resData['message'] ?? 'Failed to add product to cart');
+      }
+    } catch (e) {
+      if (ScaffoldMessenger.maybeOf(context) != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occurred: ${e.toString()}')),
+        );
+      }
+      print(e);
+    }
+  }
+
+  Future<void> fetchCartItems(BuildContext context) async {
+    try {
+      final cartProvider = Provider.of<CartProvider>(context, listen: false);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+
+      if (token == null || token.isEmpty) {
+        throw Exception('Token is null or empty');
+      }
+
+      http.Response response = await http.get(
+        Uri.parse('${Constants.uri}/api/getProductCart'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authorization': 'Bearer $token',
+        },
+      );
+
+      final Map<String, dynamic> resData = jsonDecode(response.body);
+
+      if (resData['success']) {
+        List<CartItem> cartItems = (resData['data'] as List)
+            .map((item) => CartItem.fromJson(item))
+            .toList();
+        cartProvider.setCartItems(cartItems);
+      } else {
+        showSnackBar(
+            context, resData['message'] ?? 'Failed to fetch cart items');
       }
     } catch (e) {
       if (ScaffoldMessenger.maybeOf(context) != null) {
