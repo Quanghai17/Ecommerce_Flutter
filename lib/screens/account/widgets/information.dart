@@ -29,13 +29,11 @@ class _InformationState extends State<Information> {
 
   AuthService authService = AuthService();
 
-
   @override
 
   void initState() {
 
     super.initState();
-
 
     authService.getUserData(context);
 
@@ -47,9 +45,6 @@ class _InformationState extends State<Information> {
   Widget build(BuildContext context) {
 
     final userProvider = Provider.of<UserProvider>(context).user;
-
-
-    print(userProvider.name);
 
 
     return Container(
@@ -88,9 +83,7 @@ class _InformationState extends State<Information> {
 
                   TextSpan(
 
-                      text: userProvider.name.isNotEmpty
-                          ? userProvider.name
-                          : "User",
+                      text: userProvider.name,
 
                       style: const TextStyle(
 

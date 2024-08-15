@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ecommerce/models/product.dart';
+import 'package:ecommerce/services/cart_services.dart';
 import 'package:ecommerce/utils/constants.dart';
 import 'package:ecommerce/utils/global_variables.dart';
 import 'package:ecommerce/screens/search/SearchScreen.dart';
@@ -9,11 +11,18 @@ import 'package:intl/intl.dart';
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
   const ProductDetailScreen({super.key, required this.product});
+
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final CartService _cartService = CartService();
+
+  void addToCart() async {
+    await _cartService.addToCart(context, widget.product.id.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     final formatCurrency =
@@ -44,10 +53,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           setState(() {});
                         },
                         itemCount: 1,
-                        // physics: PageScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          // print("............index = $index");
                           return Builder(
                             builder: (context) => Container(
                               padding: EdgeInsets.symmetric(
@@ -85,15 +92,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
                       color: const Color.fromARGB(31, 117, 117, 117), width: 1),
-                  // color: Color.fromARGB(255, 147, 147, 147),
                 ),
                 child: Text(
                   formatCurrency.format(int.parse(widget.product.price)),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: 16,
-                      // color: Colors.,
-                      fontWeight: FontWeight.w500),
+                      fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.width * .025),
@@ -101,7 +105,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: addToCart, // Thêm sản phẩm vào giỏ hàng
                     style: ElevatedButton.styleFrom(
                         backgroundColor:
                             const Color.fromARGB(255, 255, 255, 255),
