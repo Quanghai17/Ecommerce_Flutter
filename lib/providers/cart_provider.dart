@@ -45,13 +45,13 @@ class CartProvider extends ChangeNotifier {
   }
 
   void increaseQuantity(CartItem cartItem) {
-    cartItem.quantity;
+    cartItem.quantity += 1;
     notifyListeners();
   }
 
   void decreaseQuantity(CartItem cartItem) {
     if (cartItem.quantity > 1) {
-      cartItem.quantity;
+      cartItem.quantity -= 1;
       notifyListeners();
     }
   }

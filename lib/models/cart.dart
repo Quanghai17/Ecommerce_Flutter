@@ -25,7 +25,7 @@ class CartItem {
   final int id;
   final int userId;
   final int productId;
-  final int quantity;
+  int quantity;
   final DateTime createdAt;
   final DateTime updatedAt;
   final Product? product; // product có thể null

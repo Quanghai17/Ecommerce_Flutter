@@ -125,4 +125,44 @@ class CartService {
       print(e);
     }
   }
+
+  Future<void> updateCartItemQuantity(
+      BuildContext context, int productId, int quantity) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+
+      if (token == null || token.isEmpty) {
+        throw Exception('Token is null or empty');
+      }
+
+      http.Response response = await http.post(
+        Uri.parse('${Constants.uri}/api/updateProductCart'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'productId': productId,
+          'quantity': quantity,
+        }),
+      );
+
+      final Map<String, dynamic> resData = jsonDecode(response.body);
+
+      if (resData['success']) {
+        showSnackBar(context, 'Cập nhật số lượng thành công');
+      } else {
+        showSnackBar(
+            context, resData['message'] ?? 'Failed to update quantity');
+      }
+    } catch (e) {
+      if (ScaffoldMessenger.maybeOf(context) != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occurred: ${e.toString()}')),
+        );
+      }
+      print(e);
+    }
+  }
 }
