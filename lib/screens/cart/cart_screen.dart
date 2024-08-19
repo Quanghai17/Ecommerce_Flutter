@@ -2,6 +2,8 @@ import 'package:ecommerce/components/custom_button.dart';
 import 'package:ecommerce/providers/cart_provider.dart';
 import 'package:ecommerce/screens/cart/cart_product.dart';
 import 'package:ecommerce/screens/cart/cart_subtotal.dart';
+import 'package:ecommerce/screens/category/category_grid_screen.dart';
+import 'package:ecommerce/screens/checkout/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/utils/constants.dart';
 import 'package:ecommerce/screens/search/SearchScreen.dart';
@@ -46,13 +48,32 @@ class _CartScreenState extends State<CartScreen> {
             ),
             const Subtotal(),
             Padding(
-              padding: EdgeInsets.all(MediaQuery.of(context).size.width * .05),
-              child: CustomButton(
-                text: "Thanh toán",
-                onTap: () => {},
-                color: Colors.yellow[500],
-              ),
-            ),
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * .05),
+                child: cartProvider.isEmpty
+                    ? TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CategoryScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text('Mua hàng ngay'),
+                      )
+                    : CustomButton(
+                        text: "Thanh toán",
+                        onTap: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CheckoutScreen(),
+                            ),
+                          )
+                        },
+                        color: Colors.yellow[500],
+                      )),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Container(color: Colors.black12.withOpacity(0.08), height: 1),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),

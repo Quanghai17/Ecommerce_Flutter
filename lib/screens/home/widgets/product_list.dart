@@ -127,7 +127,7 @@ class _ProductListState extends State<ProductList> {
                                     product.name,
                                     style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 12,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   ),
@@ -163,7 +163,7 @@ class _ProductListState extends State<ProductList> {
                                         onPressed: () => {},
                                         icon: const Icon(
                                           CupertinoIcons.heart_solid,
-                                          size: 30,
+                                          size: 25,
                                           color: Colors.black87,
                                         ),
                                         label: const Text(
@@ -178,7 +178,7 @@ class _ProductListState extends State<ProductList> {
                                           onTap: () => addToCart(product),
                                           child: const Icon(
                                             CupertinoIcons.cart_badge_plus,
-                                            size: 30,
+                                            size: 25,
                                           ),
                                         ),
                                       )

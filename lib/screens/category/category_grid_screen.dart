@@ -137,7 +137,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           product.name,
                                           style: const TextStyle(
                                               color: Colors.black,
-                                              fontSize: 12,
+                                              fontSize: 10,
                                               fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
                                         ),
